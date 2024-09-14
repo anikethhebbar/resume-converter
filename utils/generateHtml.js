@@ -3,14 +3,23 @@ import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export async function generateHtmlWithLLM(text, llm, apiKey) {
-  const prompt = `Convert the following plain text resume into a clean, well-formatted HTML resume using standard HTML5 tags and CSS classes for styling.
-  
-  **Resume Text:**
+  const prompt = `Convert the following plain text resume into a clean, well-formatted HTML resume using standard HTML5 tags and CSS classes for styling. Apply the following specific style guidelines:
+
+  Style Guide:
+   Overall Layout: Use a single-column layout that is centered on the page. Ensure the layout adjusts gracefully to various screen sizes.
+   Font: Use a sans-serif font like Arial or Helvetica for the entire resume.
+   Headers: Use <h3> tags for section headers (e.g., Experience, Education).
+   Emphasis: Use <strong> tags for job titles and company names.
+   Lists: Use <ul> and <li> tags for listing skills and responsibilities.
+   Dates: Ensure the layout is responsive to various screen sizes.
+   Color Scheme: Use a neutral color palette with a light background and dark text. Consider using a subtle accent color for headers or section dividers.
+
+  Resume Text:
   \`\`\`
   ${text}
   \`\`\`
-  
-  **Desired Output:** A complete HTML document with consistent styling, including <html>, <head>, and <body> tags. Omit irrelevant information and prioritize a visually appealing, standardized layout.`;
+  Exit saying its not resume if unwanted PDF text found.
+  Desired Output: A complete HTML document with consistent styling, responsive to various screen sizes, including <html>, <head>, and <body> tags. Omit irrelevant information and prioritize a visually appealing, standardized layout adhering to the specified style guide.`;
 
   try {
     switch (llm) {
